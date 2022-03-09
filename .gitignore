@@ -1,2 +1,16 @@
-**.o
+*/*.o
+out/main
+bin/Command.o
+bin/host_io.o
+bin/parser.o
+bin/User.o
+bin/Command/Base.o
+bin/Command/Echo.o
+bin/Command/Error.o
+bin/Command/Exit.o
+bin/Command/GetAdminLevel.o
+bin/Command/Log.o
+bin/User/Base.o
+bin/User/Host.o
+bin/User/Observer.o
 out/main
