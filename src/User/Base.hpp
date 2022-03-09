@@ -27,7 +27,7 @@ public:
     _UserClass(_UserClass &&) noexcept(true) = delete;
     virtual _UserClass &operator=(const _UserClass &) noexcept(true) = delete;
     virtual _UserClass &operator=(_UserClass &&) noexcept(true) = delete;
-    virtual ~_UserClass(void) noexcept(true) {}
+    virtual ~ _UserClass(void) noexcept(true) {}
     virtual AdminLevel get_admin_level(void) const noexcept(true) = 0;
     virtual mutex *get_output_mutex(void) noexcept(true) = 0;
     virtual ostream *get_output_stream(void) noexcept(true) = 0;
