@@ -3,9 +3,6 @@
 
 #include "User/Base.hpp"
 
-
-UserClass::~UserClass(void) noexcept(true) {}
-
 string admin_level_to_string(AdminLevel a) noexcept(true)
 {
     // using enum AdminLevel;

@@ -18,18 +18,21 @@ enum class AdminLevel
     Passerby
 };
 
-class UserClass : public virtual Object
+template <nullptr_t N>
+class _UserClass : public virtual _Object<N>
 {
 public:
-    constexpr UserClass(void) noexcept(true) = default;
-    UserClass(const UserClass &) noexcept(true) = delete;
-    UserClass(UserClass &&) noexcept(true) = delete;
-    virtual UserClass &operator=(const UserClass &) noexcept(true) = delete;
-    virtual UserClass &operator=(UserClass &&) noexcept(true) = delete;
-    virtual ~UserClass(void) noexcept(true);
+    constexpr _UserClass(void) noexcept(true) {}
+    _UserClass(const _UserClass &) noexcept(true) = delete;
+    _UserClass(_UserClass &&) noexcept(true) = delete;
+    virtual _UserClass &operator=(const _UserClass &) noexcept(true) = delete;
+    virtual _UserClass &operator=(_UserClass &&) noexcept(true) = delete;
+    virtual ~_UserClass(void) noexcept(true) {}
     virtual AdminLevel get_admin_level(void) const noexcept(true) = 0;
     virtual mutex *get_output_mutex(void) noexcept(true) = 0;
     virtual ostream *get_output_stream(void) noexcept(true) = 0;
 };
+
+using UserClass = _UserClass<nullptr>;
 
 string admin_level_to_string(AdminLevel) noexcept(true);
