@@ -12,7 +12,7 @@ LD_FLAGS=-relocatable
 # main
 ################################################################################
 
-out/main: bin/Command.o bin/User.o bin/host_io.o bin/main.o bin/parser.o\
+out/main:: bin/Command.o bin/User.o bin/host_io.o bin/main.o bin/parser.o\
 		bin/queue.o bin/regex.o
 	g++ $^ -o $@ $(LK_FLAGS)
 
@@ -20,11 +20,11 @@ out/main: bin/Command.o bin/User.o bin/host_io.o bin/main.o bin/parser.o\
 # reloc object
 ################################################################################
 
-bin/Command.o: bin/Command/Base.o bin/Command/Echo.o bin/Command/Error.o\
+bin/Command.o:: bin/Command/Base.o bin/Command/Echo.o bin/Command/Error.o\
 		bin/Command/Exit.o bin/Command/GetAdminLevel.o bin/Command/Log.o
 	ld $(LD_FLAGS) -o $@ $^
 	
-bin/User.o: bin/User/Base.o bin/User/Host.o bin/User/Observer.o
+bin/User.o:: bin/User/Base.o bin/User/Host.o bin/User/Observer.o
 	ld $(LD_FLAGS) -o $@ $^
 
 ################################################################################
@@ -129,13 +129,13 @@ src/Command/Log.cpp: src/Command/Log.hpp
 # sources dependencies /User/
 ################################################################################
 
-src/User/Base.cpp: src/User/Base.hpp
+src/User/Base.cpp:: src/User/Base.hpp
 	touch $@
 
-src/User/Host.cpp: src/User/Host.hpp
+src/User/Host.cpp:: src/User/Host.hpp
 	touch $@
 
-src/User/Observer.cpp: src/User/Observer.hpp
+src/User/Observer.cpp:: src/User/Observer.hpp
 	touch $@
 
 ################################################################################
