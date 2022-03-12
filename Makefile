@@ -5,7 +5,7 @@ default:: out/main
 .INTERMEDIATE:
 .ONESHELL:
 
-CPP_FLAGS=-std=c++20 -pthread -I src -c -O3
+CPP_FLAGS=-std=c++20 -pthread -I src -c -O3 -mavx2
 LK_FLAGS=-pthread -O3
 LD_FLAGS=-relocatable
 
