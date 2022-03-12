@@ -5,7 +5,7 @@ default:: out/main
 .INTERMEDIATE:
 .ONESHELL:
 
-CPP_FLAGS=-std=c++20 -pthread -I src -c -O3 -mavx2
+CPP_FLAGS=-std=c++20 -pthread -I src -c -O3 -mavx2 -g
 LK_FLAGS=-pthread -O3
 LD_FLAGS=-relocatable
 
@@ -21,20 +21,16 @@ out/main:: bin/Command.o bin/User.o bin/host_io.o bin/main.o bin/parser.o\
 # reloc object
 ################################################################################
 
-bin/Command.o:: bin/Command/Base.o bin/Command/Echo.o bin/Command/Error.o\
-		bin/Command/Exit.o bin/Command/GetAdminLevel.o bin/Command/Log.o
+bin/Command.o:: bin/Command/Echo.o bin/Command/Error.o\
+		bin/Command/Exit.o
 	ld $(LD_FLAGS) -o $@ $^
 	
-bin/User.o:: bin/User/Base.o bin/User/Host.o bin/User/Observer.o
+bin/User.o:: bin/User/Host.o bin/User/Observer.o
 	ld $(LD_FLAGS) -o $@ $^
 
 ################################################################################
 # object /Command/
 ################################################################################
-
-bin/Command/Base.o:: src/Command/Base.cpp src/Command/Base.hpp bin/Command\
-		Makefile
-	g++ $(CPP_FLAGS) $< -o $@
 
 bin/Command/Echo.o:: src/Command/Echo.cpp src/Command/Echo.hpp bin/Command\
 		Makefile
@@ -48,20 +44,9 @@ bin/Command/Exit.o:: src/Command/Exit.cpp src/Command/Exit.hpp bin/Command\
 		Makefile
 	g++ $(CPP_FLAGS) $< -o $@
 
-bin/Command/GetAdminLevel.o:: src/Command/GetAdminLevel.cpp\
-		src/Command/GetAdminLevel.hpp bin/Command Makefile
-	g++ $(CPP_FLAGS) $< -o $@
-
-bin/Command/Log.o:: src/Command/Log.cpp src/Command/Log.hpp bin/Command\
-		Makefile
-	g++ $(CPP_FLAGS) $< -o $@
-
 ################################################################################
 # object /User/
 ################################################################################
-
-bin/User/Base.o:: src/User/Base.cpp src/User/Base.hpp bin/User Makefile
-	g++ $(CPP_FLAGS) $< -o $@
 
 bin/User/Host.o:: src/User/Host.cpp src/User/Host.hpp bin/User Makefile
 	g++ $(CPP_FLAGS) $< -o $@
@@ -101,8 +86,7 @@ src/host_io.cpp:: src/host_io.hpp src/parser.hpp src/queue.hpp\
 	touch $@
 
 src/parser.cpp:: src/parser.hpp src/regex.hpp src/Command/Exit.hpp\
-		src/User/Host.hpp src/Command/Error.hpp src/Command/GetAdminLevel.hpp\
-		Makefile
+		src/User/Host.hpp src/Command/Error.hpp Makefile
 	touch $@
 
 src/queue.cpp:: src/queue.hpp Makefile
@@ -127,18 +111,9 @@ src/Command/Error.cpp:: src/Command/Error.hpp Makefile
 src/Command/Exit.cpp:: src/Command/Exit.hpp src/User/Host.hpp Makefile
 	touch $@
 
-src/Command/GetAdminLevel.cpp:: src/Command/GetAdminLevel.hpp Makefile
-	touch $@
-
-src/Command/Log.cpp:: src/Command/Log.hpp Makefile
-	touch $@
-
 ################################################################################
 # sources dependencies /User/
 ################################################################################
-
-src/User/Base.cpp:: src/User/Base.hpp Makefile
-	touch $@
 
 src/User/Host.cpp:: src/User/Host.hpp Makefile
 	touch $@
@@ -173,9 +148,6 @@ src/Command/Error.hpp:: src/Command/Log.hpp Makefile
 	touch $@
 
 src/Command/Exit.hpp:: src/Command/Base.hpp Makefile
-	touch $@
-
-src/Command/GetAdminLevel.hpp:: src/Command/Echo.hpp Makefile
 	touch $@
 
 src/Command/Log.hpp:: src/Command/Base.hpp Makefile

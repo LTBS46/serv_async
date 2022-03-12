@@ -2,13 +2,20 @@
 
 #include "User/Base.hpp"
 
-class Host final : public virtual UserClass
-{
-public:
-    virtual mutex *get_output_mutex(void) noexcept(true) override final;
-    virtual ostream *get_output_stream(void) noexcept(true) override final;
-    virtual AdminLevel get_admin_level(void) const noexcept(true) override final;
-};
+#include <iostream>
+
+using std::cout;
 
 extern mutex m_cout; // mutex for : cout
-extern Host host;    // UserClass host
+
+template <nullptr_t N>
+class _Host final : public virtual _UserClass<N>
+{
+public:
+    virtual mutex *get_output_mutex(void) noexcept(true) override final { return &(m_cout); }
+    virtual ostream *get_output_stream(void) noexcept(true) override final { return &(cout); }
+};
+
+using Host = _Host<nullptr>;
+
+extern _Host<nullptr> host; // UserClass host
