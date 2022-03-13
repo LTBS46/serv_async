@@ -5,7 +5,7 @@ default:: out/main
 .INTERMEDIATE:
 .ONESHELL:
 
-CPP_FLAGS=-std=c++20 -pthread -I src -c -O3 -mavx2 -g
+CPP_FLAGS=-std=c++20 -pthread -I src -c -O3 -mavx2
 LK_FLAGS=-pthread -O3
 LD_FLAGS=-relocatable
 
@@ -13,7 +13,7 @@ LD_FLAGS=-relocatable
 # main
 ################################################################################
 
-out/main:: bin/Command.o bin/User.o bin/host_io.o bin/main.o bin/parser.o\
+out/main:: bin/Command.o bin/User.o bin/main.o bin/parser.o\
 		bin/queue.o bin/regex.o
 	g++ $^ -o $@ $(LK_FLAGS)
 
@@ -21,8 +21,7 @@ out/main:: bin/Command.o bin/User.o bin/host_io.o bin/main.o bin/parser.o\
 # reloc object
 ################################################################################
 
-bin/Command.o:: bin/Command/Echo.o bin/Command/Error.o\
-		bin/Command/Exit.o
+bin/Command.o:: bin/Command/Exit.o
 	ld $(LD_FLAGS) -o $@ $^
 	
 bin/User.o:: bin/User/Host.o bin/User/Observer.o
@@ -31,14 +30,6 @@ bin/User.o:: bin/User/Host.o bin/User/Observer.o
 ################################################################################
 # object /Command/
 ################################################################################
-
-bin/Command/Echo.o:: src/Command/Echo.cpp src/Command/Echo.hpp bin/Command\
-		Makefile
-	g++ $(CPP_FLAGS) $< -o $@
-
-bin/Command/Error.o:: src/Command/Error.cpp src/Command/Error.hpp bin/Command\
-		Makefile
-	g++ $(CPP_FLAGS) $< -o $@
 
 bin/Command/Exit.o:: src/Command/Exit.cpp src/Command/Exit.hpp bin/Command\
 		Makefile
@@ -62,9 +53,6 @@ bin/User/Observer.o:: src/User/Observer.cpp src/User/Observer.hpp bin/User\
 bin/main.o:: src/main.cpp bin Makefile
 	g++ $(CPP_FLAGS) $< -o $@
 
-bin/host_io.o:: src/host_io.cpp bin Makefile
-	g++ $(CPP_FLAGS) $< -o $@
-
 bin/parser.o:: src/parser.cpp bin Makefile
 	g++ $(CPP_FLAGS) $< -o $@
 
@@ -78,11 +66,7 @@ bin/regex.o:: src/regex.cpp bin Makefile
 # sources dependencies
 ################################################################################
 
-src/main.cpp:: src/queue.hpp src/host_io.hpp src/Command/Exit.hpp Makefile
-	touch $@
-
-src/host_io.cpp:: src/host_io.hpp src/parser.hpp src/queue.hpp\
-		src/Command/Exit.hpp src/User/Host.hpp Makefile
+src/main.cpp:: src/queue.hpp src/Command/Exit.hpp Makefile
 	touch $@
 
 src/parser.cpp:: src/parser.hpp src/regex.hpp src/Command/Exit.hpp\
@@ -98,15 +82,6 @@ src/regex.cpp:: src/regex.hpp Makefile
 ################################################################################
 # sources dependencies /Command/
 ################################################################################
-
-src/Command/Base.cpp:: src/Command/Base.hpp Makefile
-	touch $@
-
-src/Command/Echo.cpp:: src/Command/Echo.hpp Makefile
-	touch $@
-
-src/Command/Error.cpp:: src/Command/Error.hpp Makefile
-	touch $@
 
 src/Command/Exit.cpp:: src/Command/Exit.hpp src/User/Host.hpp Makefile
 	touch $@

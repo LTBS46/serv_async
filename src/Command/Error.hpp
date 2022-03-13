@@ -6,8 +6,10 @@
 
 using std::exception;
 
-class ErrorCommand : public virtual LogCommand
-{
-public:
-    ErrorCommand(UserClass *, const exception &) noexcept(true);
+template <nullptr_t N>
+class _ErrorCommand : public virtual _LogCommand<N>, public virtual _Command<N>, public virtual Callable<void, true, false, void>, public virtual _Object<N> {
+    public:
+    _ErrorCommand(_UserClass<N>* u, const exception& e) noexcept(true) : _Command<N>(u), _LogCommand<N>(u, e.what(), u) { }
 };
+
+using ErrorCommand = _ErrorCommand<nullptr>;
