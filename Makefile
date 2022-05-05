@@ -13,7 +13,7 @@ LD_FLAGS=-relocatable
 # main
 ################################################################################
 
-out/main:: bin/Command.o bin/User.o bin/main.o bin/parser.o\
+out/main:: bin/Command.o bin/main.o bin/parser.o\
 		bin/queue.o bin/regex.o
 	g++ $^ -o $@ $(LK_FLAGS)
 
@@ -23,26 +23,12 @@ out/main:: bin/Command.o bin/User.o bin/main.o bin/parser.o\
 
 bin/Command.o:: bin/Command/Exit.o
 	ld $(LD_FLAGS) -o $@ $^
-	
-bin/User.o:: bin/User/Host.o bin/User/Observer.o
-	ld $(LD_FLAGS) -o $@ $^
 
 ################################################################################
 # object /Command/
 ################################################################################
 
 bin/Command/Exit.o:: src/Command/Exit.cpp src/Command/Exit.hpp bin/Command\
-		Makefile
-	g++ $(CPP_FLAGS) $< -o $@
-
-################################################################################
-# object /User/
-################################################################################
-
-bin/User/Host.o:: src/User/Host.cpp src/User/Host.hpp bin/User Makefile
-	g++ $(CPP_FLAGS) $< -o $@
-
-bin/User/Observer.o:: src/User/Observer.cpp src/User/Observer.hpp bin/User\
 		Makefile
 	g++ $(CPP_FLAGS) $< -o $@
 
@@ -84,16 +70,6 @@ src/regex.cpp:: src/regex.hpp Makefile
 ################################################################################
 
 src/Command/Exit.cpp:: src/Command/Exit.hpp src/User/Host.hpp Makefile
-	touch $@
-
-################################################################################
-# sources dependencies /User/
-################################################################################
-
-src/User/Host.cpp:: src/User/Host.hpp Makefile
-	touch $@
-
-src/User/Observer.cpp:: src/User/Observer.hpp Makefile
 	touch $@
 
 ################################################################################

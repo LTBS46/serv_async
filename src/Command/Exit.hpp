@@ -26,11 +26,9 @@ class _ExitCommand final : public virtual _Command<N>, public virtual Callable<v
         : _Command<N>(ptr), rv(i) { }
     virtual bool has_trait(CommandFlags f) const volatile noexcept(true) final override { return f == CommandFlags::Exit; }
     virtual void operator()(void) noexcept(true) final override {
-        if (this->usr == &host) {
-            scoped_lock lk(m_exit_trigger);
-            if (not exit_trigger)
-                exit_trigger = true, exit_code = rv;
-        }
+        scoped_lock lk(m_exit_trigger);
+        if (not exit_trigger)
+            exit_trigger = true, exit_code = rv;
     }
 };
 

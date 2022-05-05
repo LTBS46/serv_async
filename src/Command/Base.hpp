@@ -1,5 +1,8 @@
 #pragma once
 
+template <nullptr_t>
+class _Command;
+
 #include "Callable.hpp"
 #include "User/Observer.hpp"
 
@@ -14,7 +17,7 @@ class _Command : public virtual Callable<void, true, false, void>, public virtua
     _UserClass<N>* usr;
 
     public:
-    _Command(_UserClass<N>* ptr = N) noexcept(true) : usr(ptr not_eq N ? ptr : &observer) { }
+    _Command(_UserClass<N>* ptr) noexcept(true) : usr(ptr) { }
     virtual bool has_trait(CommandFlags) volatile const noexcept(true) { return false; }
 };
 

@@ -31,28 +31,7 @@ mutex m_log_file;
 //
 //
 
-void cleanup(void) noexcept(true) {
-  Command* c;
-  while ((c = pop_command()) not_eq nullptr) {
-    (*c)();
-    delete c;
-  }
-}
-
-static inline void set_env(vector<string>& vs) noexcept(true)
-try {
-  for (const string& s : vs) {
-  }
-} catch (const exception& e) {
-}
-
-static inline void set_env(int argc, const char* const* argv) noexcept(true)
-try {
-  vector<string> tmp;
-  for (int i = 0; i < argc; i++)
-    tmp.push_back(argv[i]);
-} catch (const exception& e) {
-}
+void cleanup(void) noexcept(true) { }
 
 //
 //
@@ -62,8 +41,10 @@ try {
   int tmp = atexit(cleanup);
   if (not tmp) {
     log_file = ofstream(string("log.txt"), ios_base::app);
-    set_env(argc, argv);
-    string line;
+    vector<string> args;
+    for (int i = 0; i < argc; i++)
+      args.push_back(argv[i]);
+    string line;_Host<nullptr> host;
     while (getline(cin, line)) {
       Command* c;
       c = parse_command(&(host), line);

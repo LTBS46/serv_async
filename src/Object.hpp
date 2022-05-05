@@ -1,10 +1,9 @@
 #pragma once
 
-template <decltype(nullptr)>
+template<decltype(nullptr)>
 class _Object {
     public:
-    constexpr _Object(void) noexcept = default;
-    constexpr virtual ~_Object(void) noexcept = default;
-};
+    constexpr _Object(void) noexcept { };
+    constexpr virtual ~_Object(void) noexcept { };
 
-using Object = _Object<nullptr>;
+};

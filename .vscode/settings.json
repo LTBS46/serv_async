@@ -56,12 +56,14 @@
         "sstream": "cpp",
         "stop_token": "cpp",
         "streambuf": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "set": "cpp",
+        "queue": "cpp",
+        "unordered_set": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled",
     "C_Cpp.formatting": "vcFormat",
     "C_Cpp.vcFormat.newLine.beforeCatch": false,
-    "C_Cpp.vcFormat.newLine.beforeElse": false,
     "C_Cpp.vcFormat.indent.caseContentsWhenBlock": true,
     "C_Cpp.vcFormat.indent.caseLabels": true,
     "C_Cpp.vcFormat.newLine.beforeOpenBrace.block": "sameLine",
@@ -73,5 +75,9 @@
     "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
     "C_Cpp.vcFormat.space.betweenEmptyBraces": true,
     "C_Cpp.vcFormat.space.betweenEmptyLambdaBrackets": true,
-    "C_Cpp.vcFormat.indent.multiLineRelativeTo": "outermostParenthesis"
+    "C_Cpp.vcFormat.indent.multiLineRelativeTo": "outermostParenthesis",
+    "C_Cpp.vcFormat.indent.accessSpecifiers": true,
+    "C_Cpp.vcFormat.indent.withinParentheses": "alignToParenthesis",
+    "C_Cpp.vcFormat.space.beforeInitializerListOpenBrace": true,
+    "C_Cpp.workspaceSymbols": "All"
 }
